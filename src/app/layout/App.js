@@ -1,11 +1,16 @@
-import { Typography } from "@material-ui/core";
+import { Container } from "@material-ui/core";
+import EventDashboard from "../../features/event/EventDashboard/EventDashboard";
+import NavBar from "../../features/nav/NavBar/NavBar";
 import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <Typography>Hi</Typography>
-    </div>
+    <>
+      <NavBar />
+      <Container style={{ marginTop: 45 }}>
+        <EventDashboard />
+      </Container>
+    </>
   );
 }
 
