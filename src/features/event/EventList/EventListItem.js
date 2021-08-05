@@ -4,7 +4,6 @@ import {
   Card,
   CardContent,
   Divider,
-  Link,
   Typography,
 } from "@material-ui/core";
 import React from "react";
@@ -13,7 +12,7 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import EventListAttendee from "./EventListAttendee";
 // import eventsData from "../../../DummyData/Events";
 
-function EventListItem({ event }) {
+function EventListItem({ event, selectEvent }) {
   return (
     <>
       <Card style={{ marginBottom: 30 }}>
@@ -62,6 +61,7 @@ function EventListItem({ event }) {
         <CardContent style={{ display: "Flex" }}>
           <Typography style={{ flexGrow: 1 }}>{event.description}</Typography>
           <Button
+            onClick={() => selectEvent(event)}
             size="small"
             style={{
               backgroundColor: "#00008B",
