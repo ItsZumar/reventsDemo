@@ -2,6 +2,7 @@ import { Grid, Button } from "@material-ui/core";
 import React, { useState } from "react";
 import EventList from "../EventList/EventList";
 import EventForm from "../EventForm/EventForm";
+import cuid from "cuid";
 
 const eventsFromDashboard = [
   {
@@ -61,11 +62,18 @@ const eventsFromDashboard = [
 ];
 
 function EventDashboard() {
-  const [events, setEvents] = useState(eventsFromDashboard);
+  var [events, setEvents] = useState(eventsFromDashboard);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleIsOpenToggle = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleCreateEvent = (newEvent) => {
+    newEvent.id = cuid();
+    newEvent.hostPhotoURL = "/assets/user.png";
+    setEvents([...events, newEvent]);
+    setIsOpen(false);
   };
 
   return (
@@ -82,7 +90,12 @@ function EventDashboard() {
         >
           Create Event
         </Button>
-        {isOpen && <EventForm cancelFormOpen={handleIsOpenToggle} />}
+        {isOpen && (
+          <EventForm
+            createEvent={handleCreateEvent}
+            cancelFormOpen={handleIsOpenToggle}
+          />
+        )}
       </Grid>
     </Grid>
   );
