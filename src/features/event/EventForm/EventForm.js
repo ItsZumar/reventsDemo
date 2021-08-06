@@ -2,23 +2,27 @@ import React, { useEffect, useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import { Paper, Typography, Button } from "@material-ui/core";
 
-function EventForm({ cancelFormOpen, createEvent, selectedEvent }) {
-  // const [title, setTitle] = useState("");
-  // const [date, setDate] = useState("");
-  // const [city, setCity] = useState("");
-  // const [venue, setVenue] = useState("");
-  // const [host, setHost] = useState("");
-
+function EventForm({
+  cancelFormOpen,
+  createEvent,
+  selectedEvent,
+  updateEvent,
+}) {
   const [state, setState] = useState({
     title: "",
     date: "",
     city: "",
     venue: "",
-    host: "",
+    hostedBy: "",
   });
 
-  const handleSubmit = () => {
-    createEvent(state);
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    if (state.id) {
+      updateEvent(state);
+    } else {
+      createEvent(state);
+    }
   };
 
   const handleState = (input) => (e) => {
@@ -27,7 +31,7 @@ function EventForm({ cancelFormOpen, createEvent, selectedEvent }) {
 
   const selectEvt = () => {
     if (selectedEvent !== null) {
-      setState(selectedEvent);
+      setState({ ...selectedEvent });
     }
   };
 
@@ -41,6 +45,7 @@ function EventForm({ cancelFormOpen, createEvent, selectedEvent }) {
         <form>
           <Typography gutterBottom>Event Title</Typography>
           <TextField
+            value={state.title}
             label="Event Title"
             variant="outlined"
             fullWidth
@@ -49,6 +54,7 @@ function EventForm({ cancelFormOpen, createEvent, selectedEvent }) {
           />
           <Typography gutterBottom>Event Date</Typography>
           <TextField
+            value={state.date}
             type="date"
             style={{ marginBottom: 10 }}
             variant="outlined"
@@ -57,6 +63,7 @@ function EventForm({ cancelFormOpen, createEvent, selectedEvent }) {
           />
           <Typography gutterBottom>City</Typography>
           <TextField
+            value={state.city}
             style={{ marginBottom: 10 }}
             label="City event is taking place"
             variant="outlined"
@@ -65,6 +72,7 @@ function EventForm({ cancelFormOpen, createEvent, selectedEvent }) {
           />
           <Typography gutterBottom>Venue</Typography>
           <TextField
+            value={state.venue}
             style={{ marginBottom: 10 }}
             label="Enter Venue of event"
             variant="outlined"
@@ -73,17 +81,18 @@ function EventForm({ cancelFormOpen, createEvent, selectedEvent }) {
           />
           <Typography gutterBottom>Hosted By</Typography>
           <TextField
+            value={state.hostedBy}
             style={{ marginBottom: 20 }}
             label="Enter the name of person hosting"
             variant="outlined"
             fullWidth
-            onChange={handleState("host")}
+            onChange={handleState("hostedBy")}
           />
           <Button
             variant="contained"
             color="primary"
             style={{ marginRight: 10, backgroundColor: "#00008B" }}
-            onClick={() => handleSubmit()}
+            onClick={(evt) => handleSubmit(evt)}
           >
             Submit
           </Button>

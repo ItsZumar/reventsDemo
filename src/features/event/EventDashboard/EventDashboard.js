@@ -6,9 +6,10 @@ import cuid from "cuid";
 
 const eventsFromDashboard = [
   {
-    id: 1,
+    id: "1",
     title: "Trip to Murree",
-    date: "2021-03-27T11:00:00+00:00",
+    // date: "7-12-2021",
+    date: "2021-06-21",
     category: "culture",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
@@ -33,9 +34,9 @@ const eventsFromDashboard = [
     ],
   },
   {
-    id: 1,
+    id: "2",
     title: "Trip to Murree",
-    date: "2021-03-27T11:00:00+00:00",
+    date: "2021-09-08",
     category: "culture",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
@@ -87,6 +88,34 @@ function EventDashboard() {
     setIsOpen(true);
   };
 
+  // const handleUpdateEvent = (updatedEvent) => {
+  //   setEvents(({ events }) => {
+  //     events.map((event) => {
+  //       if (event.id === updatedEvent.id) {
+  //         return { ...updatedEvent };
+  //       } else {
+  //         return event;
+  //       }
+  //     });
+  //   });
+  //   setIsOpen(false);
+  //   setSelectedEvent(null);
+  // };
+
+  const handleUpdateEvent = (updatedEvent) => {
+    setEvents(({ events }) => ({
+      events: events.map((event) => {
+        if (event.id === updatedEvent.id) {
+          return { ...updatedEvent };
+        } else {
+          return event;
+        }
+      }),
+    }));
+    setIsOpen(false);
+    setSelectedEvent(null);
+  };
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={7}>
@@ -103,6 +132,8 @@ function EventDashboard() {
         </Button>
         {isOpen && (
           <EventForm
+            key={selectedEvent ? selectedEvent.id : 0}
+            updateEvent={handleUpdateEvent}
             selectedEvent={selectedEvent}
             createEvent={handleCreateEvent}
             cancelFormOpen={handleFormCancel}
